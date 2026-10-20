@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Projet Réservations</title>
+    <th:block layout:fragment="css"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}">Header here</div>
+    <div class="container">
+        <div layout:fragment="content">Main content will be inserted here.</div>
+    </div>
+    <div th:replace="~{fragments/footer :: footer}">Footer here</div>
+    <th:block layout:fragment="scripts"></th:block>
+</body>
+</html>

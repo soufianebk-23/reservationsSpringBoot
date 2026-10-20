@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Header fragment</title>
+</head>
+<body>
+    <header th:fragment="header">
+        <h1><a th:href="@{/}">Réservations</a></h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/artists}">Artists</a></li>
+            </ul>
+        </nav>
+    </header>
+</body>
+</html>

@@ -9,7 +9,8 @@
     <header th:fragment="header">
         <div style="float:right">
             <p sec:authorize="!isAuthenticated()">Vous n'êtes pas connecté.<br>
-                <a th:href="@{/login}">Se connecter</a>
+                <a th:href="@{/login}">Se connecter</a><br>
+                <a th:href="@{/register}">S'inscrire</a>
             </p>
             <div sec:authorize="isAuthenticated()">
                 <p>Bonjour <span sec:authentication="principal.username">Bob</span> !</p>

@@ -11,6 +11,10 @@
 
         <div class="actions">
             <a th:href="@{/artists/{id}/edit(id=${artist.id})}">Edit</a>
+            <form th:id="|deleteForm-${artist.id}|"
+                  th:action="@{/artists/{id}(id=${artist.id})}" th:method="delete">
+                <a href="#" th:onclick="|if(confirm('Confirm delete artist #${artist.id}')) document.getElementById('deleteForm-${artist.id}').submit(); return false;|">Delete</a>
+            </form>
         </div>
 
         <nav><a th:href="@{/artists}">Retour à l'index</a></nav>

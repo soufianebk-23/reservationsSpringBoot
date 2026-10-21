@@ -12,6 +12,8 @@ import be.iccbxl.pid.reservationsspringboot.model.User;
 import be.iccbxl.pid.reservationsspringboot.model.UserRole;
 import be.iccbxl.pid.reservationsspringboot.repository.UserRepository;
 import be.iccbxl.pid.reservationsspringboot.dto.UserProfileDto;
+import org.springframework.transaction.annotation.Transactional;
+import be.iccbxl.pid.reservationsspringboot.repository.PasswordResetTokenRepository;
 
 @Service
 public class UserService {
@@ -21,6 +23,10 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+
+    @Autowired
+    private PasswordResetTokenRepository tokenRepository;
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -74,5 +80,13 @@ public class UserService {
 
     public void deleteUser(long id) {
         userRepository.deleteById(id);
+    }
+    @Transactional
+    public void deleteByLogin(String login) {
+        User user = userRepository.findByLogin(login);
+        if (user != null) {
+            tokenRepository.deleteByUser(user);
+            userRepository.delete(user);
+        }
     }
 }

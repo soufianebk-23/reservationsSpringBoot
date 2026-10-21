@@ -18,6 +18,10 @@ import be.iccbxl.pid.reservationsspringboot.model.User;
 import be.iccbxl.pid.reservationsspringboot.repository.UserRepository;
 import be.iccbxl.pid.reservationsspringboot.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class ProfileController {
@@ -79,7 +83,26 @@ public class ProfileController {
 
         return "redirect:/profile";
     }
+    @DeleteMapping("/profile/delete")
+    public String deleteAccount(HttpServletRequest request, HttpServletResponse response,
+            RedirectAttributes redirAttrs) {
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+
+        if (request.isUserInRole("ADMIN")) {
+            redirAttrs.addFlashAttribute("errorMessage", "Pas de suppression de son propre compte admin !");
+            return "redirect:/profile";
+        }
+
+        userService.deleteByLogin(login);
+
+        new SecurityContextLogoutHandler().logout(request, response, auth);
+        SecurityContextHolder.clearContext();
+
+        redirAttrs.addFlashAttribute("successMessage", "Votre compte a été supprimé avec succès.");
+        return "redirect:/";
+    }
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByLogin(auth.getName());

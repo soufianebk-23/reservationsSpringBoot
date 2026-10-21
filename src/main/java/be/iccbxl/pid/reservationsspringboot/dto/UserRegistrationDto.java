@@ -1,12 +1,15 @@
 package be.iccbxl.pid.reservationsspringboot.dto;
 
+import be.iccbxl.pid.reservationsspringboot.validation.PasswordConfirmable;
+import be.iccbxl.pid.reservationsspringboot.validation.PasswordMatches;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UserRegistrationDto {
+@PasswordMatches
+public class UserRegistrationDto implements PasswordConfirmable {
 
     @NotBlank(message = "Le prénom est obligatoire")
     private String firstname;

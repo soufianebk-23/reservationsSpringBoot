@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <title>Header fragment</title>
 </head>
 <body>
     <header th:fragment="header">
+        <div style="float:right">
+            <p sec:authorize="!isAuthenticated()">Vous n'êtes pas connecté.<br>
+                <a th:href="@{/login}">Se connecter</a>
+            </p>
+            <div sec:authorize="isAuthenticated()">
+                <p>Bonjour <span sec:authentication="principal.username">Bob</span> !</p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Se déconnecter</button>
+                </form>
+            </div>
+        </div>
+
         <h1><a th:href="@{/}">Réservations</a></h1>
         <nav>
             <ul>

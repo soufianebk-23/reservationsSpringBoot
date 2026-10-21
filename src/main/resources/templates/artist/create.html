@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Création d'un artiste</title>
+    <style>
+        .fieldError { color: red; }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h2>Nouvel artiste</h2>
+
+        <form th:action="@{/artists/create}" th:object="${artist}" method="post">
+            <div>
+                <label>Firstname:</label>
+                <input type="text" th:field="*{firstname}" maxlength="60" required>
+                <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="fieldError"></p>
+            </div>
+            <div>
+                <label>Lastname:</label>
+                <input type="text" th:field="*{lastname}" maxlength="60" required>
+                <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="fieldError"></p>
+            </div>
+            <div>
+                <button type="submit">Ajouter</button>
+                <a th:href="@{/artists}">Annuler</a>
+            </div>
+        </form>
+
+        <nav><a th:href="@{/artists}">Retour à l'index</a></nav>
+    </div>
+</body>
+</html>
